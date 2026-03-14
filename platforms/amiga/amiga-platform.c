@@ -70,7 +70,7 @@ extern int force_move_slow_to_chip;
 
 uint8_t rtg_enabled = 0, piscsi_enabled = 0, pinet_enabled = 0, kick13_mode = 0, pistorm_dev_enabled = 1, pi_ahi_enabled = 0, physical_z2_first = 0;
 uint8_t a314_emulation_enabled = 0, a314_initialized = 0;
-
+extern uint8_t a1000_mode = 0;
 extern uint32_t piscsi_base, pistorm_dev_base;
 extern uint8_t rtg_dpms;
 
@@ -473,6 +473,12 @@ void setvar_amiga(struct emulator_config *cfg, char *var, char *val) {
         printf("[AMIGA] CDTV mode enabled.\n");
         cdtv_mode = 1;
     }
+    if CHKVAR("a1000") {
+        printf("[AMIGA] 1000 mode enabled.\n");
+        a1000_mode = 1;
+    }
+
+
     if (CHKVAR("rtg") && !rtg_enabled) {
         if (init_rtg_data(cfg)) {
             printf("[AMIGA] RTG Enabled.\n");

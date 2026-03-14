@@ -267,6 +267,7 @@ static inline void m68k_execute_bef(m68ki_cpu_core *state, int num_cycles)
 }
 
 void *cpu_task() {
+	extern uint8_t a1000_mode;
 	m68ki_cpu_core *state = &m68ki_cpu;
   state->ovl = ovl;
   state->gpio = gpio;
@@ -316,7 +317,12 @@ cpu_loop:
   if (do_reset) {
     cpu_pulse_reset();
     do_reset=0;
-    usleep(1000000); // 1sec
+// the amiga 1000 need a long reset or the bootrom will throw a greenscreen
+    if (a1000_mode != 0){
+	usleep(2000000); // 2sec
+    } else {
+	usleep(1000000); // 1sec
+    }
     rtg_on=0;
 //    while(amiga_reset==0);
 //    printf("CPU emulation reset.\n");
