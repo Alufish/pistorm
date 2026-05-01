@@ -37,27 +37,7 @@ LAB_0003:
 	RESET						;f80080: 4e70
 	MOVEA.L	LAB_0001+2,A0		;f80082: 207900f80004
 	JMP	(A0)					;f80088: 4ed0
-LAB_0004:
-	MOVEQ	#0,D0				;f8008a: 7000
-	MOVE.L	#$0000000a,D1		;f8008c: 223c0000000a
-	MOVE.B	#$02,CIAA_DDRA		;f80092: 13fc000200bfe201
-	MOVE.B	#$02,CIAA_PRA		;f8009a: 13fc000200bfe001
-LAB_0005:
-	DBF	D0,LAB_0005				;f800a2: 51c8fffe
-	BCHG	#1,CIAA_PRA			;f800a6: 0879000100bfe001
-	DBF	D1,LAB_0005				;f800ae: 51c9fff2
-	RESET						;f800b2: 4e70
-	MOVE.W	#$0444,COLOR00		;f800b4: 33fc044400dff180
-	LEA	EXT_0002,A7				;f800bc: 4ff900040000
-	LEA	SECSTRT_0(PC),A0		;f800c2: 41faff3c
-	CMPA.L	#$00f00000,A0		;f800c6: b1fc00f00000
-	BEQ.S	LAB_0006			;f800cc: 6720
-	CMPI.W	#$1111,EXT_EXTROM	;f800ce: Check for rom signaure 
-	BNE.S	new_start			;f800d6: not there ? 
-	MOVE.W	#$0fff,COLOR00		;f800d8: Sreen set to white
-	LEA	LAB_0006,A5				;f800e0: returm address on 
-	MOVEA.L	EXT_EXTROM_ENTRY,A0	;f800e6: get address of ext rom entrypoint
-	JMP	(A0)					;f800ec: jump there
+	align 2
 new_start:						; We start executing here for the new rom
 	MOVE.B	#$03,CIAA_DDRA		;f800ee: 13fc000300bfe201
 	MOVE.B	#$02,CIAA_PRA		;f800f6: 13fc000200bfe001
